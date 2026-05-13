@@ -1,0 +1,10 @@
+const fs = require('fs');
+const cheerio = require('cheerio');
+const file = process.argv[2];
+const html = fs.readFileSync(file, 'utf8');
+const $ = cheerio.load(html);
+console.log('--- ' + file + ' ---');
+console.log('H1:', $('h1').text().trim().replace(/\s+/g, ' '));
+console.log('H2s:', $('h2').map((i,el) => $(el).text().trim().replace(/\s+/g, ' ')).get());
+console.log('H3s:', $('h3').map((i,el) => $(el).text().trim().replace(/\s+/g, ' ')).get());
+console.log('Paragraphs:', $('p').map((i,el) => $(el).text().trim().replace(/\s+/g, ' ')).get().filter(p => p.length > 20));
